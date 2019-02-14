@@ -1,21 +1,15 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const  dotEnv=require('dotenv');
-const nodemon=require('nodemon');
-
-dotEnv.config()
+var app = require('./app');
+var port = app.get('port');
 
 
-const app=express();
-const port = 3000;
 
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
-
-app.get('/usuarios/', function(req,res){
-    app.res(200).send('Lista de Usuarios');
+app.use(function(err, req, res, next){
+    if(err){
+        res.status(500).send('Ooops, ha ocurrido un error');
+    }
 });
 
-app.get('/usuarios/:id', function(req,res){
-    app.res(200).send('')
-});
+app.listen(port, function(){
+    console.log("Running application on port...... "+ port);
+})
